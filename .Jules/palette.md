@@ -1,0 +1,3 @@
+## 2024-05-23 - Accessibility of "Button-like" Labels
+**Learning:** This app frequently used `<label>` elements styled as buttons to trigger file inputs, relying on the default browser behavior that clicking a label triggers its associated input. However, this pattern is inaccessible to keyboard users because `label` elements are not focusable by default and do not handle Enter/Space keys.
+**Action:** Replace "button-like" labels with actual `<button>` elements (type="button") that trigger a hidden file input via a React ref. This ensures standard keyboard accessibility (Tab, Enter, Space) and screen reader support (role="button") without changing the visual design.
