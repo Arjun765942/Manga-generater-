@@ -1,0 +1,3 @@
+## 2024-05-22 - [Keyboard Inaccessible File Uploads]
+**Learning:** Found a pattern where file inputs are hidden inside `<label>` elements without keyboard accessibility support. `display: none` removes inputs from the accessibility tree, and wrapping labels are not focusable by default.
+**Action:** Use a visible `<button>` that programmatically triggers a hidden `<input>` via a `ref`. This ensures the trigger is focusable and actionable via keyboard (Enter/Space).
