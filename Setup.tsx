@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GENRES, LANGUAGES, Persona } from './types';
 
 interface SetupProps {
@@ -59,6 +59,9 @@ const Footer = () => {
 };
 
 export const Setup: React.FC<SetupProps> = (props) => {
+    const heroInputRef = useRef<HTMLInputElement>(null);
+    const friendInputRef = useRef<HTMLInputElement>(null);
+
     if (!props.show && !props.isTransitioning) return null;
 
     return (
@@ -104,6 +107,28 @@ export const Setup: React.FC<SetupProps> = (props) => {
                     <div className="flex-1 flex flex-col gap-2">
                         <div className="font-comic text-xl text-black border-b-4 border-black mb-1">1. THE CAST</div>
                         
+                        {/* Hidden Inputs for Accessibility */}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            ref={heroInputRef}
+                            onChange={(e) => {
+                                if (e.target.files?.[0]) props.onHeroUpload(e.target.files[0]);
+                                e.target.value = '';
+                            }}
+                        />
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            ref={friendInputRef}
+                            onChange={(e) => {
+                                if (e.target.files?.[0]) props.onFriendUpload(e.target.files[0]);
+                                e.target.value = '';
+                            }}
+                        />
+
                         {/* HERO UPLOAD */}
                         <div className={`p-3 border-4 border-dashed ${props.hero ? 'border-green-500 bg-green-50' : 'border-blue-300 bg-blue-50'} transition-colors relative group`}>
                             <div className="flex justify-between items-center mb-1">
@@ -114,16 +139,22 @@ export const Setup: React.FC<SetupProps> = (props) => {
                             {props.hero ? (
                                 <div className="flex gap-3 items-center mt-1">
                                      <img src={`data:image/jpeg;base64,${props.hero.base64}`} alt="Hero Preview" className="w-20 h-20 object-cover border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.2)] bg-white rotate-[-2deg]" />
-                                     <label className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase">
+                                     <button
+                                        type="button"
+                                        onClick={() => heroInputRef.current?.click()}
+                                        className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase"
+                                     >
                                          REPLACE
-                                         <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onHeroUpload(e.target.files[0])} />
-                                     </label>
+                                     </button>
                                 </div>
                             ) : (
-                                <label className="comic-btn bg-blue-500 text-white text-lg px-3 py-3 block w-full hover:bg-blue-400 cursor-pointer text-center">
+                                <button
+                                    type="button"
+                                    onClick={() => heroInputRef.current?.click()}
+                                    className="comic-btn bg-blue-500 text-white text-lg px-3 py-3 block w-full hover:bg-blue-400 cursor-pointer text-center"
+                                >
                                     UPLOAD HERO 
-                                    <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onHeroUpload(e.target.files[0])} />
-                                </label>
+                                </button>
                             )}
                         </div>
 
@@ -137,16 +168,22 @@ export const Setup: React.FC<SetupProps> = (props) => {
                             {props.friend ? (
                                 <div className="flex gap-3 items-center mt-1">
                                     <img src={`data:image/jpeg;base64,${props.friend.base64}`} alt="Co-Star Preview" className="w-20 h-20 object-cover border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.2)] bg-white rotate-[2deg]" />
-                                    <label className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase">
+                                    <button
+                                        type="button"
+                                        onClick={() => friendInputRef.current?.click()}
+                                        className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase"
+                                    >
                                         REPLACE
-                                        <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onFriendUpload(e.target.files[0])} />
-                                    </label>
+                                    </button>
                                 </div>
                             ) : (
-                                <label className="comic-btn bg-purple-500 text-white text-lg px-3 py-3 block w-full hover:bg-purple-400 cursor-pointer text-center">
+                                <button
+                                    type="button"
+                                    onClick={() => friendInputRef.current?.click()}
+                                    className="comic-btn bg-purple-500 text-white text-lg px-3 py-3 block w-full hover:bg-purple-400 cursor-pointer text-center"
+                                >
                                     UPLOAD CO-STAR 
-                                    <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onFriendUpload(e.target.files[0])} />
-                                </label>
+                                </button>
                             )}
                         </div>
                         
