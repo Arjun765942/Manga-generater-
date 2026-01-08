@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GENRES, LANGUAGES, Persona } from './types';
 
 interface SetupProps {
@@ -59,6 +59,9 @@ const Footer = () => {
 };
 
 export const Setup: React.FC<SetupProps> = (props) => {
+    const heroInputRef = useRef<HTMLInputElement>(null);
+    const friendInputRef = useRef<HTMLInputElement>(null);
+
     if (!props.show && !props.isTransitioning) return null;
 
     return (
@@ -110,20 +113,33 @@ export const Setup: React.FC<SetupProps> = (props) => {
                                 <p className="font-comic text-lg uppercase font-bold text-blue-900">HERO (REQUIRED)</p>
                                 {props.hero && <span className="text-green-600 font-bold font-comic text-sm animate-pulse">✓ READY</span>}
                             </div>
+
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                ref={heroInputRef}
+                                onChange={(e) => e.target.files?.[0] && props.onHeroUpload(e.target.files[0])}
+                            />
                             
                             {props.hero ? (
                                 <div className="flex gap-3 items-center mt-1">
                                      <img src={`data:image/jpeg;base64,${props.hero.base64}`} alt="Hero Preview" className="w-20 h-20 object-cover border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.2)] bg-white rotate-[-2deg]" />
-                                     <label className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase">
+                                     <button
+                                        onClick={() => heroInputRef.current?.click()}
+                                        className="comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase"
+                                        aria-label="Replace Hero"
+                                     >
                                          REPLACE
-                                         <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onHeroUpload(e.target.files[0])} />
-                                     </label>
+                                     </button>
                                 </div>
                             ) : (
-                                <label className="comic-btn bg-blue-500 text-white text-lg px-3 py-3 block w-full hover:bg-blue-400 cursor-pointer text-center">
+                                <button
+                                    onClick={() => heroInputRef.current?.click()}
+                                    className="comic-btn bg-blue-500 text-white text-lg px-3 py-3 block w-full hover:bg-blue-400 cursor-pointer text-center"
+                                >
                                     UPLOAD HERO 
-                                    <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onHeroUpload(e.target.files[0])} />
-                                </label>
+                                </button>
                             )}
                         </div>
 
@@ -134,19 +150,32 @@ export const Setup: React.FC<SetupProps> = (props) => {
                                 {props.friend && <span className="text-green-600 font-bold font-comic text-sm animate-pulse">✓ READY</span>}
                             </div>
 
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                ref={friendInputRef}
+                                onChange={(e) => e.target.files?.[0] && props.onFriendUpload(e.target.files[0])}
+                            />
+
                             {props.friend ? (
                                 <div className="flex gap-3 items-center mt-1">
                                     <img src={`data:image/jpeg;base64,${props.friend.base64}`} alt="Co-Star Preview" className="w-20 h-20 object-cover border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.2)] bg-white rotate-[2deg]" />
-                                    <label className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase">
+                                    <button
+                                        onClick={() => friendInputRef.current?.click()}
+                                        className="comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase"
+                                        aria-label="Replace Co-Star"
+                                    >
                                         REPLACE
-                                        <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onFriendUpload(e.target.files[0])} />
-                                    </label>
+                                    </button>
                                 </div>
                             ) : (
-                                <label className="comic-btn bg-purple-500 text-white text-lg px-3 py-3 block w-full hover:bg-purple-400 cursor-pointer text-center">
+                                <button
+                                    onClick={() => friendInputRef.current?.click()}
+                                    className="comic-btn bg-purple-500 text-white text-lg px-3 py-3 block w-full hover:bg-purple-400 cursor-pointer text-center"
+                                >
                                     UPLOAD CO-STAR 
-                                    <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onFriendUpload(e.target.files[0])} />
-                                </label>
+                                </button>
                             )}
                         </div>
                         
@@ -163,23 +192,23 @@ export const Setup: React.FC<SetupProps> = (props) => {
                         <div className="bg-yellow-50 p-3 border-4 border-black h-full flex flex-col justify-between">
                             <div>
                                 <div className="mb-2">
-                                    <p className="font-comic text-base mb-1 font-bold text-gray-800">GENRE</p>
-                                    <select value={props.selectedGenre} onChange={(e) => props.onGenreChange(e.target.value)} className="w-full font-comic text-lg p-1 border-2 border-black uppercase bg-white text-black cursor-pointer shadow-[3px_3px_0px_rgba(0,0,0,0.2)] focus:outline-none focus:translate-x-[1px] focus:translate-y-[1px] focus:shadow-none transition-all">
+                                    <label htmlFor="genre-select" className="block font-comic text-base mb-1 font-bold text-gray-800">GENRE</label>
+                                    <select id="genre-select" value={props.selectedGenre} onChange={(e) => props.onGenreChange(e.target.value)} className="w-full font-comic text-lg p-1 border-2 border-black uppercase bg-white text-black cursor-pointer shadow-[3px_3px_0px_rgba(0,0,0,0.2)] focus:outline-none focus:translate-x-[1px] focus:translate-y-[1px] focus:shadow-none transition-all">
                                         {GENRES.map(g => <option key={g} value={g} className="text-black">{g}</option>)}
                                     </select>
                                 </div>
 
                                 <div className="mb-2">
-                                    <p className="font-comic text-base mb-1 font-bold text-gray-800">LANGUAGE</p>
-                                    <select value={props.selectedLanguage} onChange={(e) => props.onLanguageChange(e.target.value)} className="w-full font-comic text-lg p-1 border-2 border-black uppercase bg-white text-black cursor-pointer shadow-[3px_3px_0px_rgba(0,0,0,0.2)]">
+                                    <label htmlFor="language-select" className="block font-comic text-base mb-1 font-bold text-gray-800">LANGUAGE</label>
+                                    <select id="language-select" value={props.selectedLanguage} onChange={(e) => props.onLanguageChange(e.target.value)} className="w-full font-comic text-lg p-1 border-2 border-black uppercase bg-white text-black cursor-pointer shadow-[3px_3px_0px_rgba(0,0,0,0.2)]">
                                         {LANGUAGES.map(l => <option key={l.code} value={l.code} className="text-black">{l.name}</option>)}
                                     </select>
                                 </div>
 
                                 {props.selectedGenre === 'Custom' && (
                                     <div className="mb-2">
-                                        <p className="font-comic text-base mb-1 font-bold text-gray-800">PREMISE</p>
-                                        <textarea value={props.customPremise} onChange={(e) => props.onPremiseChange(e.target.value)} placeholder="Enter your story premise..." className="w-full p-1 border-2 border-black font-comic text-lg h-16 resize-none shadow-[3px_3px_0px_rgba(0,0,0,0.2)]" />
+                                        <label htmlFor="premise-input" className="block font-comic text-base mb-1 font-bold text-gray-800">PREMISE</label>
+                                        <textarea id="premise-input" value={props.customPremise} onChange={(e) => props.onPremiseChange(e.target.value)} placeholder="Enter your story premise..." className="w-full p-1 border-2 border-black font-comic text-lg h-16 resize-none shadow-[3px_3px_0px_rgba(0,0,0,0.2)]" />
                                     </div>
                                 )}
                             </div>
