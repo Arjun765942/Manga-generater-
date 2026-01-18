@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .comic-btn {
+        @apply border-4 border-black font-comic transition-all shadow-[4px_4px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)];
+    }
+}
+
+body {
+    background-color: #222;
+    overflow-x: hidden;
+}
+
+.font-comic {
+    font-family: 'Comic Neue', cursive;
+}
+
+/* Page flip 3D effect */
+.book {
+    position: relative;
+    width: 500px; /* Reduced width */
+    height: 750px; /* Reduced height */
+    perspective: 1500px;
+    transform-style: preserve-3d;
+    margin: 20px auto; /* Reduced margin */
+}
+
+/* Small mobile overrides */
+@media (max-width: 600px) {
+    .book {
+        width: 90vw;
+        height: 135vw; /* maintain ~2:3 aspect */
+        margin: 10px auto;
+    }
+}
+
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: left center;
+    transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform-style: preserve-3d;
+    box-shadow: inset 20px 0 50px rgba(0,0,0,0.1); /* Spine shadow */
+}
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: white;
+    overflow: hidden; /* Contain bleed */
+}
+
+.back {
+    transform: rotateY(180deg);
+    box-shadow: inset -20px 0 50px rgba(0,0,0,0.1);
+}
+
+.flipped {
+    transform: rotateY(-180deg);
+}
+
+.book.opened {
+    transform: translateX(50%); /* Shift right so open book is centered */
+}
+
+@media (max-width: 800px) {
+    .book.opened {
+        transform: translateX(0); /* On mobile, just flip in place */
+    }
+}
