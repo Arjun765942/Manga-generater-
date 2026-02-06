@@ -114,15 +114,15 @@ export const Setup: React.FC<SetupProps> = (props) => {
                             {props.hero ? (
                                 <div className="flex gap-3 items-center mt-1">
                                      <img src={`data:image/jpeg;base64,${props.hero.base64}`} alt="Hero Preview" className="w-20 h-20 object-cover border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.2)] bg-white rotate-[-2deg]" />
-                                     <label className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase">
+                                     <label className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase focus-within:outline-4 focus-within:outline-black focus-within:outline-offset-2">
                                          REPLACE
-                                         <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onHeroUpload(e.target.files[0])} />
+                                         <input type="file" accept="image/*" className="sr-only" onChange={(e) => e.target.files?.[0] && props.onHeroUpload(e.target.files[0])} />
                                      </label>
                                 </div>
                             ) : (
-                                <label className="comic-btn bg-blue-500 text-white text-lg px-3 py-3 block w-full hover:bg-blue-400 cursor-pointer text-center">
+                                <label className="comic-btn bg-blue-500 text-white text-lg px-3 py-3 block w-full hover:bg-blue-400 cursor-pointer text-center focus-within:outline-4 focus-within:outline-black focus-within:outline-offset-2">
                                     UPLOAD HERO 
-                                    <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onHeroUpload(e.target.files[0])} />
+                                    <input type="file" accept="image/*" className="sr-only" onChange={(e) => e.target.files?.[0] && props.onHeroUpload(e.target.files[0])} />
                                 </label>
                             )}
                         </div>
@@ -137,15 +137,15 @@ export const Setup: React.FC<SetupProps> = (props) => {
                             {props.friend ? (
                                 <div className="flex gap-3 items-center mt-1">
                                     <img src={`data:image/jpeg;base64,${props.friend.base64}`} alt="Co-Star Preview" className="w-20 h-20 object-cover border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.2)] bg-white rotate-[2deg]" />
-                                    <label className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase">
+                                    <label className="cursor-pointer comic-btn bg-yellow-400 text-black text-sm px-3 py-1 hover:bg-yellow-300 transition-transform active:scale-95 uppercase focus-within:outline-4 focus-within:outline-black focus-within:outline-offset-2">
                                         REPLACE
-                                        <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onFriendUpload(e.target.files[0])} />
+                                        <input type="file" accept="image/*" className="sr-only" onChange={(e) => e.target.files?.[0] && props.onFriendUpload(e.target.files[0])} />
                                     </label>
                                 </div>
                             ) : (
-                                <label className="comic-btn bg-purple-500 text-white text-lg px-3 py-3 block w-full hover:bg-purple-400 cursor-pointer text-center">
+                                <label className="comic-btn bg-purple-500 text-white text-lg px-3 py-3 block w-full hover:bg-purple-400 cursor-pointer text-center focus-within:outline-4 focus-within:outline-black focus-within:outline-offset-2">
                                     UPLOAD CO-STAR 
-                                    <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && props.onFriendUpload(e.target.files[0])} />
+                                    <input type="file" accept="image/*" className="sr-only" onChange={(e) => e.target.files?.[0] && props.onFriendUpload(e.target.files[0])} />
                                 </label>
                             )}
                         </div>
@@ -164,14 +164,14 @@ export const Setup: React.FC<SetupProps> = (props) => {
                             <div>
                                 <div className="mb-2">
                                     <p className="font-comic text-base mb-1 font-bold text-gray-800">GENRE</p>
-                                    <select value={props.selectedGenre} onChange={(e) => props.onGenreChange(e.target.value)} className="w-full font-comic text-lg p-1 border-2 border-black uppercase bg-white text-black cursor-pointer shadow-[3px_3px_0px_rgba(0,0,0,0.2)] focus:outline-none focus:translate-x-[1px] focus:translate-y-[1px] focus:shadow-none transition-all">
+                                    <select value={props.selectedGenre} onChange={(e) => props.onGenreChange(e.target.value)} className="w-full font-comic text-lg p-1 border-2 border-black uppercase bg-white text-black cursor-pointer shadow-[3px_3px_0px_rgba(0,0,0,0.2)] focus:outline-4 focus:outline-black focus:outline-offset-2 transition-all">
                                         {GENRES.map(g => <option key={g} value={g} className="text-black">{g}</option>)}
                                     </select>
                                 </div>
 
                                 <div className="mb-2">
                                     <p className="font-comic text-base mb-1 font-bold text-gray-800">LANGUAGE</p>
-                                    <select value={props.selectedLanguage} onChange={(e) => props.onLanguageChange(e.target.value)} className="w-full font-comic text-lg p-1 border-2 border-black uppercase bg-white text-black cursor-pointer shadow-[3px_3px_0px_rgba(0,0,0,0.2)]">
+                                    <select value={props.selectedLanguage} onChange={(e) => props.onLanguageChange(e.target.value)} className="w-full font-comic text-lg p-1 border-2 border-black uppercase bg-white text-black cursor-pointer shadow-[3px_3px_0px_rgba(0,0,0,0.2)] focus:outline-4 focus:outline-black focus:outline-offset-2">
                                         {LANGUAGES.map(l => <option key={l.code} value={l.code} className="text-black">{l.name}</option>)}
                                     </select>
                                 </div>
@@ -179,12 +179,12 @@ export const Setup: React.FC<SetupProps> = (props) => {
                                 {props.selectedGenre === 'Custom' && (
                                     <div className="mb-2">
                                         <p className="font-comic text-base mb-1 font-bold text-gray-800">PREMISE</p>
-                                        <textarea value={props.customPremise} onChange={(e) => props.onPremiseChange(e.target.value)} placeholder="Enter your story premise..." className="w-full p-1 border-2 border-black font-comic text-lg h-16 resize-none shadow-[3px_3px_0px_rgba(0,0,0,0.2)]" />
+                                        <textarea value={props.customPremise} onChange={(e) => props.onPremiseChange(e.target.value)} placeholder="Enter your story premise..." className="w-full p-1 border-2 border-black font-comic text-lg h-16 resize-none shadow-[3px_3px_0px_rgba(0,0,0,0.2)] focus:outline-4 focus:outline-black focus:outline-offset-2" />
                                     </div>
                                 )}
                             </div>
                             
-                            <label className="flex items-center gap-2 font-comic text-base cursor-pointer text-black mt-1 p-1 hover:bg-yellow-100 rounded border-2 border-transparent hover:border-yellow-300 transition-colors">
+                            <label className="flex items-center gap-2 font-comic text-base cursor-pointer text-black mt-1 p-1 hover:bg-yellow-100 rounded border-2 border-transparent hover:border-yellow-300 transition-colors focus-within:outline-4 focus-within:outline-black focus-within:outline-offset-2">
                                 <input type="checkbox" checked={props.richMode} onChange={(e) => props.onRichModeChange(e.target.checked)} className="w-4 h-4 accent-black" />
                                 <span className="text-black">NOVEL MODE (Rich Dialogue)</span>
                             </label>
